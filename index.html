@@ -32,9 +32,42 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .floral-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.14;
+    }
+
+    .floral-bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .floral-bg path {
+      fill: none;
+      stroke: #8c6a4a;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.16;
+    }
+
+    .floral-bg circle {
+      fill: none;
+      stroke: #8c6a4a;
+      stroke-width: 1.2;
+      opacity: 0.10;
     }
 
     .wrapper {
+      position: relative;
+      z-index: 1;
       width: 100%;
       max-width: 720px;
       display: flex;
@@ -74,12 +107,13 @@
 
     .card {
       width: 100%;
-      background: var(--card);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 28px 32px;
       text-align: left;
+      backdrop-filter: blur(2px);
     }
 
     h1 {
@@ -103,6 +137,7 @@
       border-radius: 14px;
       outline: none;
       font-family: 'Glacial Indifference', Arial, sans-serif;
+      background: rgba(255, 255, 255, 0.96);
     }
 
     input:focus {
@@ -115,7 +150,7 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.98);
       display: none;
     }
 
@@ -147,65 +182,70 @@
       .names-header { font-size: 2.6rem; }
       .tagline { font-size: 1rem; }
       h1 { font-size: 1.1rem; }
+
+      .floral-bg {
+        opacity: 0.10;
+      }
     }
   </style>
 </head>
 <body>
   <div class="floral-bg" aria-hidden="true">
-  <svg viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice">
-    <g class="floral-left">
-      <path d="M120 1080 C150 980, 180 900, 210 820 C230 760, 250 700, 260 620" />
-      <path d="M210 820 C180 790, 155 760, 145 720" />
-      <path d="M225 760 C270 730, 300 690, 315 640" />
-      <path d="M245 690 C215 660, 195 625, 190 590" />
-      <path d="M258 625 C300 595, 330 555, 345 510" />
+    <svg viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice">
+      <g class="floral-left">
+        <path d="M120 1080 C150 980, 180 900, 210 820 C230 760, 250 700, 260 620" />
+        <path d="M210 820 C180 790, 155 760, 145 720" />
+        <path d="M225 760 C270 730, 300 690, 315 640" />
+        <path d="M245 690 C215 660, 195 625, 190 590" />
+        <path d="M258 625 C300 595, 330 555, 345 510" />
 
-      <path d="M145 720 C120 705, 102 685, 92 660" />
-      <path d="M145 720 C170 700, 185 675, 194 648" />
-      <path d="M315 640 C287 625, 267 602, 255 575" />
-      <path d="M315 640 C340 620, 358 592, 370 560" />
-      <path d="M190 590 C165 575, 148 553, 138 530" />
-      <path d="M190 590 C215 572, 232 548, 242 520" />
-      <path d="M345 510 C322 496, 302 475, 292 452" />
-      <path d="M345 510 C370 492, 388 468, 400 438" />
+        <path d="M145 720 C120 705, 102 685, 92 660" />
+        <path d="M145 720 C170 700, 185 675, 194 648" />
+        <path d="M315 640 C287 625, 267 602, 255 575" />
+        <path d="M315 640 C340 620, 358 592, 370 560" />
+        <path d="M190 590 C165 575, 148 553, 138 530" />
+        <path d="M190 590 C215 572, 232 548, 242 520" />
+        <path d="M345 510 C322 496, 302 475, 292 452" />
+        <path d="M345 510 C370 492, 388 468, 400 438" />
 
-      <circle cx="92" cy="660" r="10" />
-      <circle cx="194" cy="648" r="8" />
-      <circle cx="255" cy="575" r="9" />
-      <circle cx="370" cy="560" r="11" />
-      <circle cx="138" cy="530" r="8" />
-      <circle cx="242" cy="520" r="9" />
-      <circle cx="292" cy="452" r="8" />
-      <circle cx="400" cy="438" r="10" />
-    </g>
+        <circle cx="92" cy="660" r="10" />
+        <circle cx="194" cy="648" r="8" />
+        <circle cx="255" cy="575" r="9" />
+        <circle cx="370" cy="560" r="11" />
+        <circle cx="138" cy="530" r="8" />
+        <circle cx="242" cy="520" r="9" />
+        <circle cx="292" cy="452" r="8" />
+        <circle cx="400" cy="438" r="10" />
+      </g>
 
-    <g class="floral-right">
-      <path d="M1480 1100 C1450 1000, 1420 920, 1390 840 C1365 775, 1345 710, 1330 640" />
-      <path d="M1395 840 C1425 810, 1450 778, 1460 740" />
-      <path d="M1368 770 C1328 740, 1298 705, 1284 660" />
-      <path d="M1348 700 C1378 670, 1398 635, 1405 598" />
-      <path d="M1328 628 C1288 600, 1258 562, 1245 520" />
+      <g class="floral-right">
+        <path d="M1480 1100 C1450 1000, 1420 920, 1390 840 C1365 775, 1345 710, 1330 640" />
+        <path d="M1395 840 C1425 810, 1450 778, 1460 740" />
+        <path d="M1368 770 C1328 740, 1298 705, 1284 660" />
+        <path d="M1348 700 C1378 670, 1398 635, 1405 598" />
+        <path d="M1328 628 C1288 600, 1258 562, 1245 520" />
 
-      <path d="M1460 740 C1485 722, 1502 700, 1512 674" />
-      <path d="M1460 740 C1435 720, 1418 695, 1408 668" />
-      <path d="M1284 660 C1310 643, 1330 620, 1342 590" />
-      <path d="M1284 660 C1258 642, 1240 615, 1228 586" />
-      <path d="M1405 598 C1430 580, 1448 556, 1458 530" />
-      <path d="M1405 598 C1380 580, 1362 556, 1350 528" />
-      <path d="M1245 520 C1268 505, 1288 484, 1300 460" />
-      <path d="M1245 520 C1220 502, 1202 478, 1190 450" />
+        <path d="M1460 740 C1485 722, 1502 700, 1512 674" />
+        <path d="M1460 740 C1435 720, 1418 695, 1408 668" />
+        <path d="M1284 660 C1310 643, 1330 620, 1342 590" />
+        <path d="M1284 660 C1258 642, 1240 615, 1228 586" />
+        <path d="M1405 598 C1430 580, 1448 556, 1458 530" />
+        <path d="M1405 598 C1380 580, 1362 556, 1350 528" />
+        <path d="M1245 520 C1268 505, 1288 484, 1300 460" />
+        <path d="M1245 520 C1220 502, 1202 478, 1190 450" />
 
-      <circle cx="1512" cy="674" r="10" />
-      <circle cx="1408" cy="668" r="8" />
-      <circle cx="1342" cy="590" r="9" />
-      <circle cx="1228" cy="586" r="11" />
-      <circle cx="1458" cy="530" r="8" />
-      <circle cx="1350" cy="528" r="9" />
-      <circle cx="1300" cy="460" r="8" />
-      <circle cx="1190" cy="450" r="10" />
-    </g>
-  </svg>
-</div>
+        <circle cx="1512" cy="674" r="10" />
+        <circle cx="1408" cy="668" r="8" />
+        <circle cx="1342" cy="590" r="9" />
+        <circle cx="1228" cy="586" r="11" />
+        <circle cx="1458" cy="530" r="8" />
+        <circle cx="1350" cy="528" r="9" />
+        <circle cx="1300" cy="460" r="8" />
+        <circle cx="1190" cy="450" r="10" />
+      </g>
+    </svg>
+  </div>
+
   <div class="wrapper">
     <div class="names-header">Susan & Cody</div>
     <div class="date">09.05.2026</div>
