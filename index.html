@@ -21,7 +21,7 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -41,23 +41,20 @@
       gap: 10px;
     }
 
-    /* “Susan & Cody” — Brown Sugar style placeholder */
     .names-header {
-      font-size: 1.5rem;
+      font-size: 1.5rem; /* Brown Sugar style */
       font-weight: 600;
       letter-spacing: 0.04em;
       color: #000000;
     }
 
-    /* “09.05.2026” — Glacial Indifference style placeholder */
     .date {
-      font-size: 1rem;
+      font-size: 1rem; /* Glacial Indifference style */
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #000000;
     }
 
-    /* “JOIN US IN CELEBRATION” */
     .tagline {
       font-size: 1.1rem;
       letter-spacing: 0.08em;
@@ -143,4 +140,84 @@
       .card { padding: 22px; }
       .names-header { font-size: 1.3rem; }
       .tagline { font-size: 1rem; }
-      
+      h1 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="names-header">Susan & Cody</div>
+    <div class="date">09.05.2026</div>
+    <div class="tagline">JOIN US IN CELEBRATION</div>
+
+    <main class="card">
+      <h1>FIND YOUR NAME</h1>
+      <p>Start typing your name, then click your result to open your personalized RSVP form.</p>
+
+      <div class="search-wrap">
+        <input
+          type="text"
+          id="guestSearch"
+          placeholder="Enter your name to RSVP"
+          autocomplete="off"
+        />
+        <div class="results" id="results"></div>
+      </div>
+
+      <div class="helper">Please respond by July 15, 2026.</div>
+    </main>
+  </div>
+
+  <script>
+    const guests = [
+      { name: "Susan Nguyen", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+      { name: "Cody Thompson", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+      { name: "Clark Thompson", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+    ];
+
+    const searchInput = document.getElementById('guestSearch');
+    const resultsBox = document.getElementById('results');
+
+    function renderResults(matches) {
+      if (!matches.length) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      resultsBox.innerHTML = matches.map(guest => `
+        <div class="result-item" data-link="${guest.link}">${guest.name}</div>
+      `).join('');
+      resultsBox.style.display = 'block';
+
+      document.querySelectorAll('.result-item').forEach(item => {
+        item.addEventListener('click', () => {
+          window.location.href = item.dataset.link;
+        });
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      const matches = guests.filter(guest =>
+        guest.name.toLowerCase().includes(query)
+      ).slice(0, 8);
+
+      renderResults(matches);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-wrap')) {
+        resultsBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
