@@ -8,7 +8,7 @@
     :root {
       --bg: #edeced;
       --card: #ffffff;
-      --text: #000000;
+      --text: #2f2a24;
       --muted: #7a6f66;
       --accent: #8c6a4a;
       --accent-soft: #efe3d5;
@@ -31,55 +31,68 @@
       padding: 24px;
     }
 
-    .card {
+    .wrapper {
       width: 100%;
       max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+
+    /* “Susan & Cody” — Brown Sugar style placeholder */
+    .names-header {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #000000;
+    }
+
+    /* “09.05.2026” — Glacial Indifference style placeholder */
+    .date {
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #000000;
+    }
+
+    /* “JOIN US IN CELEBRATION” */
+    .tagline {
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      color: #000000;
+    }
+
+    .card {
+      width: 100%;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 32px;
-      text-align: center;
+      padding: 28px 32px;
+      text-align: left;
     }
 
-    .header-names {
-      font-family: "Brown Sugar", "Times New Roman", serif; /* fallback */
-      font-size: 1.6rem;
-      letter-spacing: 0.04em;
-      margin-bottom: 6px;
-      color: #000000;
-    }
-
-    .header-date {
-      font-family: "Glacial Indifference", Arial, sans-serif; /* fallback */
-      font-size: 1.1rem;
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      line-height: 1.2;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 12px;
-      color: #000000;
     }
 
-    .header-join {
-      font-family: "Glacial Indifference", Arial, sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 26px;
-      color: #000000;
-    }
-
-    .search-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      color: #000000;
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     .search-wrap {
       position: relative;
-      text-align: left;
     }
 
     input {
@@ -124,26 +137,10 @@
       margin-top: 18px;
       font-size: 0.95rem;
       color: var(--muted);
-      text-align: left;
     }
 
     @media (max-width: 640px) {
       .card { padding: 22px; }
-      .header-names { font-size: 1.4rem; }
-      .header-join { font-size: 1.05rem; }
-    }
-  </style>
-</head>
-<body>
-  <main class="card">
-    <div class="header-names">Susan &amp; Cody</div>
-    <div class="header-date">09.05.2026</div>
-    <div class="header-join">JOIN US IN CELEBRATION</div>
-
-    <div class="search-title">FIND YOUR NAME</div>
-
-    <div class="search-wrap">
-      <input
-        type="text"
-        id="guestSearch"
-        placeholder="Enter 
+      .names-header { font-size: 1.3rem; }
+      .tagline { font-size: 1rem; }
+      
