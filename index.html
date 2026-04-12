@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding RSVP Search</title>
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --card: #ffffff;
+      --text: #2f2a24;
+      --muted: #7a6f66;
+      --accent: #8c6a4a;
+      --accent-soft: #efe3d5;
+      --border: #e7ddd2;
+      --shadow: 0 10px 30px rgba(85, 63, 42, 0.08);
+      --radius: 18px;
+    }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #fdfaf6 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 720px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 18px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(140, 106, 74, 0.12);
+    }
+
+    .results {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      display: none;
+    }
+
+    .result-item {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-item:hover {
+      background: var(--accent-soft);
+    }
+
+    .helper {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .note {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 22px; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Find your RSVP</h1>
+    <p>Start typing your name, then click your result to open your personalized RSVP form.</p>
+
+    <div class="search-wrap">
+      <input
+        type="text"
+        id="guestSearch"
+        placeholder="Example: Jane Doe"
+        autocomplete="off"
+      />
+      <div class="results" id="results"></div>
+    </div>
+
+    <div class="helper">Please respond by July 15, 2026.</div>
+  </main>
+
+  <script>
+    const guests = [
+      { name: "Susan Nguyen", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+      { name: "Cody Thompson", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+      { name: "Clark Thompson", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+    ];
+
+    const searchInput = document.getElementById('guestSearch');
+    const resultsBox = document.getElementById('results');
+
+    function renderResults(matches) {
+      if (!matches.length) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      resultsBox.innerHTML = matches.map(guest => `
+        <div class="result-item" data-link="${guest.link}">${guest.name}</div>
+      `).join('');
+      resultsBox.style.display = 'block';
+
+      document.querySelectorAll('.result-item').forEach(item => {
+        item.addEventListener('click', () => {
+          window.location.href = item.dataset.link;
+        });
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      const matches = guests.filter(guest =>
+        guest.name.toLowerCase().includes(query)
+      ).slice(0, 8);
+
+      renderResults(matches);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-wrap')) {
+        resultsBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
