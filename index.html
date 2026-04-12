@@ -93,4 +93,137 @@
 
     .search-wrap {
       position: relative;
-    
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 18px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+      font-family: 'Glacial Indifference', Arial, sans-serif;
+      background: #ffffff;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(140, 106, 74, 0.12);
+    }
+
+    .results {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      display: none;
+    }
+
+    .result-item {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s ease;
+      font-family: 'Glacial Indifference', Arial, sans-serif;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-item:hover {
+      background: var(--accent-soft);
+    }
+
+    .helper {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-family: 'Glacial Indifference', Arial, sans-serif;
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 22px; }
+      .names-header { font-size: 2.6rem; }
+      .tagline { font-size: 1rem; }
+      h1 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="names-header">Susan & Cody</div>
+    <div class="date">09.05.2026</div>
+    <div class="tagline">JOIN US IN CELEBRATION</div>
+
+    <main class="card">
+      <h1>FIND YOUR NAME</h1>
+
+      <div class="search-wrap">
+        <input
+          type="text"
+          id="guestSearch"
+          placeholder="Enter your name to RSVP"
+          autocomplete="off"
+        />
+        <div class="results" id="results"></div>
+      </div>
+
+      <div class="helper">Please respond by July 15, 2026.</div>
+    </main>
+  </div>
+
+  <script>
+    const guests = [
+      { name: "Susan Nguyen", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+      { name: "Cody Thompson", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+      { name: "Clark Thompson", link: "https://forms.gle/yJBTyzdHVFmosgjt6" },
+    ];
+
+    const searchInput = document.getElementById('guestSearch');
+    const resultsBox = document.getElementById('results');
+
+    function renderResults(matches) {
+      if (!matches.length) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      resultsBox.innerHTML = matches.map(guest => `
+        <div class="result-item" data-link="${guest.link}">${guest.name}</div>
+      `).join('');
+      resultsBox.style.display = 'block';
+
+      document.querySelectorAll('.result-item').forEach(item => {
+        item.addEventListener('click', () => {
+          window.location.href = item.dataset.link;
+        });
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      const matches = guests.filter(guest =>
+        guest.name.toLowerCase().includes(query)
+      ).slice(0, 8);
+
+      renderResults(matches);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-wrap')) {
+        resultsBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
